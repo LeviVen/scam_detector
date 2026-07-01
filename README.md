@@ -102,8 +102,3 @@ This runs the React dev server on `http://localhost:3000` and proxies API reques
 ### 4. Use the app
 
 Open `http://localhost:3000` in your browser, paste a suspicious message (optionally with a sender email/phone), and click **Scan Message**.
-
-## Notes
-
-- This repository (and its `.env` file with live API keys) is intended to stay **private**. If it's ever made public, or forked/shared outside its intended audience, the keys should be revoked/rotated immediately.
-- VirusTotal free-tier API keys are rate-limited, which is why URL scans run sequentially with a delay between requests.
