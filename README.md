@@ -94,4 +94,4 @@ Open `http://localhost:3000` in your browser, paste a suspicious message (option
 
 
 ## IMPORTANT
-For all the additional files and documents for the project please see "Additional Documents" folder
+All the additional files and documents for the project are in "Additional Documents" folder
