@@ -40,25 +40,6 @@ It combines several signals:
     └── package.json
 ```
 
-## How It Works (Flow)
-
-1. **User submits a scan** from `ScanPanel` — the message text, an optional sender email, an optional sender phone, and a "no prior history" checkbox — which is sent to the backend via `POST /api/scan`.
-
-2. **Phase 1 (parallel):**
-   - All URLs found in the message are extracted and their redirects followed to reveal the true destination.
-   - If a sender email was provided, it's checked against IPQS.
-   - If a sender phone was provided, it's checked against Veriphone.
-
-3. **Phase 2 (parallel):**
-   - The message text (with URLs stripped out) is sent to an LLM (via Groq) to score manipulation tactics in the language itself.
-   - If email/phone data was collected in Phase 1, two more LLM calls check whether that sender data is *consistent* with what the message claims (e.g. "claims to be your bank" + "sent from a disposable Gmail address" = mismatch).
-
-4. **URL scanning (sequential):** Each URL is submitted to VirusTotal and polled for results (done sequentially to respect API rate limits), combined with the local heuristic URL score.
-
-5. **Aggregation:** All of the above — message score, URL penalties, sender verdicts — are combined into one final score and verdict, which is returned to the frontend.
-
-6. **Result rendering:** `ResultPanel` displays the verdict badge, score, summary, red flags, sender identity cards, per-URL scan results, and a collapsible technical details section.
-
 ## Prerequisites
 
 - [Node.js](https://nodejs.org/) (v16 or later recommended) and npm
@@ -102,3 +83,11 @@ This runs the React dev server on `http://localhost:3000` and proxies API reques
 ### 4. Use the app
 
 Open `http://localhost:3000` in your browser, paste a suspicious message (optionally with a sender email/phone), and click **Scan Message**.
+
+
+## Troubleshooting
+
+- **Frontend can't reach the backend / requests fail:** make sure the backend is running on port `5000` *before* starting the frontend, since the React dev server proxies API calls to it.
+- **Port already in use:** stop whatever else is running on `5000` (backend) or `3000` (frontend), or change `PORT` in `backend/.env` (and update the frontend `proxy` setting accordingly).
+- **Scan results missing URL/email/phone data:** double check that `backend/.env` still contains valid, non-expired keys for VirusTotal, IPQS, and Veriphone — these providers can rate-limit or revoke free-tier keys over time.
+- **Slow scans:** this is expected — VirusTotal URL scans are polled sequentially by design to respect API rate limits, so messages with multiple URLs take longer.
