@@ -91,3 +91,7 @@ Open `http://localhost:3000` in your browser, paste a suspicious message (option
 - **Port already in use:** stop whatever else is running on `5000` (backend) or `3000` (frontend), or change `PORT` in `backend/.env` (and update the frontend `proxy` setting accordingly).
 - **Scan results missing URL/email/phone data:** double check that `backend/.env` still contains valid, non-expired keys for VirusTotal, IPQS, and Veriphone — these providers can rate-limit or revoke free-tier keys over time.
 - **Slow scans:** this is expected — VirusTotal URL scans are polled sequentially by design to respect API rate limits, so messages with multiple URLs take longer.
+
+
+## IMPORTANT
+For all the additional files and documents for the project please see "Additional Documents" folder
