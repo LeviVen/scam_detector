@@ -23,7 +23,7 @@ It combines several signals:
 ├── backend/
 │   ├── server.js          # Express API — all scanning/analysis logic lives here
 │   ├── package.json
-│   └── .env                # API keys (included in this repo — see setup below)
+│   └── .env                # API keys (NOT included in this repo — see setup below)
 │
 └── frontend/
     ├── public/
@@ -43,11 +43,12 @@ It combines several signals:
 ## Prerequisites
 
 - [Node.js](https://nodejs.org/) (v16 or later recommended) and npm
-- No API keys need to be obtained separately — `backend/.env` is already included in this repository with working keys for:
+- `backend/.env` is not included in this repository (it's gitignored to keep the API keys out of version control). It is sent with the following API KEYs:
   - [Groq](https://console.groq.com/) — LLM analysis
   - [VirusTotal](https://www.virustotal.com/gui/join-us) — URL scanning
   - [IPQualityScore](https://www.ipqualityscore.com/) — email reputation
   - [Veriphone](https://veriphone.io/) — phone validation
+
 
 ## Setup & Running Locally
 
@@ -58,7 +59,10 @@ git clone <repository-url>
 cd <repository-folder>
 ```
 
-### 2. Backend setup
+### 2. Handle the .env file
+Put the .env file you got that contains the API KEYs into the backend directory as seen in the project structure.
+
+### 3. Backend setup
 
 ```bash
 cd backend
@@ -68,7 +72,7 @@ npm start
 
 This runs the API on `http://localhost:5000` (or use `npm run dev` for auto-restart via nodemon during development).
 
-### 3. Frontend setup
+### 4. Frontend setup
 
 In a separate terminal:
 
@@ -80,7 +84,7 @@ npm start
 
 This runs the React dev server on `http://localhost:3000` and proxies API requests to the backend on port 5000 (configured via the `proxy` field in `frontend/package.json`).
 
-### 4. Use the app
+### 5. Use the app
 
 Open `http://localhost:3000` in your browser, paste a suspicious message (optionally with a sender email/phone), and click **Scan Message**.
 
